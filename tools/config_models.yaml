@@ -1,0 +1,7 @@
+package: generated
+output:
+  ../internal/generated/models.gen.go
+generate:
+  models: true
+output-options:
+  nullable-type: true

@@ -1,0 +1,7 @@
+package: generated
+output:
+  ../internal/generated/spec.gen.go
+generate:
+  embedded-spec: true
+output-options:
+  nullable-type: true
