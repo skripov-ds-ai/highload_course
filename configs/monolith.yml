@@ -1,0 +1,14 @@
+monolith:
+  http:
+    port: 8888
+  postgres:
+    db: social_net
+    user: postgres
+    password: password
+    host: db
+    port: 5432
+
+    maxOpenConns: 100
+    maxIdleConns: 100
+    connMaxLifetime: 1m
+    connMaxIdleTime: 1m

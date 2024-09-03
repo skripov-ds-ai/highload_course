@@ -13,13 +13,17 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": ["id", "password"],
                 "properties": {
                   "id": {
                     "$ref": "#/components/schemas/UserId"
                   },
                   "password": {
                     "type": "string",
-                    "example": "Секретная строка"
+                    "example": "Секретная строка",
+                    "x-oapi-codegen-extra-tags": {
+                      "validate": "required,minLength=8"
+                    }
                   }
                 }
               }
@@ -66,6 +70,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": ["first_name", "second_name", "birthdate", "password"],
                 "properties": {
                   "first_name": {
                     "type": "string",
@@ -78,6 +83,10 @@
                   "birthdate": {
                     "$ref": "#/components/schemas/BirthDate"
                   },
+                  "gender": {
+                    "type": "string",
+                    "example": "Пол"
+                  },
                   "biography": {
                     "type": "string",
                     "example": "Хобби, интересы и т.п."
@@ -88,7 +97,8 @@
                   },
                   "password": {
                     "type": "string",
-                    "example": "Секретная строка"
+                    "example": "Секретная строка",
+                    "minLength": 8
                   }
                 }
               }
@@ -673,6 +683,7 @@
       },
       "User": {
         "type": "object",
+        "required": ["id", "first_name", "second_name", "birthdate"],
         "properties": {
           "id": {
             "$ref": "#/components/schemas/UserId"
@@ -735,6 +746,7 @@
       "Post": {
         "type": "object",
         "description": "Пост пользователя",
+        "required": ["id", "text", "author_user_id"],
         "properties": {
           "id": {
             "$ref": "#/components/schemas/PostId"

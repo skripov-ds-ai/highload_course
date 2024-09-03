@@ -89,19 +89,19 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 
 // The interface specification for the client above.
 type ClientInterface interface {
-	// GetDialogUserIdList request
-	GetDialogUserIdList(ctx context.Context, userId UserId, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetDialogUserIDList request
+	GetDialogUserIDList(ctx context.Context, userID UserID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// PostDialogUserIdSendWithBody request with any body
-	PostDialogUserIdSendWithBody(ctx context.Context, userId UserId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// PostDialogUserIDSendWithBody request with any body
+	PostDialogUserIDSendWithBody(ctx context.Context, userID UserID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	PostDialogUserIdSend(ctx context.Context, userId UserId, body PostDialogUserIdSendJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	PostDialogUserIDSend(ctx context.Context, userID UserID, body PostDialogUserIDSendJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// PutFriendDeleteUserId request
-	PutFriendDeleteUserId(ctx context.Context, userId UserId, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// PutFriendDeleteUserID request
+	PutFriendDeleteUserID(ctx context.Context, userID UserID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// PutFriendSetUserId request
-	PutFriendSetUserId(ctx context.Context, userId UserId, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// PutFriendSetUserID request
+	PutFriendSetUserID(ctx context.Context, userID UserID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PostLoginWithBody request with any body
 	PostLoginWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -113,22 +113,22 @@ type ClientInterface interface {
 
 	PostPostCreate(ctx context.Context, body PostPostCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// PutPostDeleteId request
-	PutPostDeleteId(ctx context.Context, id PostId, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// PutPostDeleteID request
+	PutPostDeleteID(ctx context.Context, id PostID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetPostFeed request
 	GetPostFeed(ctx context.Context, params *GetPostFeedParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetPostGetId request
-	GetPostGetId(ctx context.Context, id PostId, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetPostGetID request
+	GetPostGetID(ctx context.Context, id PostID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PutPostUpdateWithBody request with any body
 	PutPostUpdateWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	PutPostUpdate(ctx context.Context, body PutPostUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetUserGetId request
-	GetUserGetId(ctx context.Context, id UserId, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetUserGetID request
+	GetUserGetID(ctx context.Context, id UserID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PostUserRegisterWithBody request with any body
 	PostUserRegisterWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -139,8 +139,8 @@ type ClientInterface interface {
 	GetUserSearch(ctx context.Context, params *GetUserSearchParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) GetDialogUserIdList(ctx context.Context, userId UserId, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetDialogUserIdListRequest(c.Server, userId)
+func (c *Client) GetDialogUserIDList(ctx context.Context, userID UserID, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetDialogUserIDListRequest(c.Server, userID)
 	if err != nil {
 		return nil, err
 	}
@@ -151,8 +151,8 @@ func (c *Client) GetDialogUserIdList(ctx context.Context, userId UserId, reqEdit
 	return c.Client.Do(req)
 }
 
-func (c *Client) PostDialogUserIdSendWithBody(ctx context.Context, userId UserId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPostDialogUserIdSendRequestWithBody(c.Server, userId, contentType, body)
+func (c *Client) PostDialogUserIDSendWithBody(ctx context.Context, userID UserID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPostDialogUserIDSendRequestWithBody(c.Server, userID, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -163,8 +163,8 @@ func (c *Client) PostDialogUserIdSendWithBody(ctx context.Context, userId UserId
 	return c.Client.Do(req)
 }
 
-func (c *Client) PostDialogUserIdSend(ctx context.Context, userId UserId, body PostDialogUserIdSendJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPostDialogUserIdSendRequest(c.Server, userId, body)
+func (c *Client) PostDialogUserIDSend(ctx context.Context, userID UserID, body PostDialogUserIDSendJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPostDialogUserIDSendRequest(c.Server, userID, body)
 	if err != nil {
 		return nil, err
 	}
@@ -175,8 +175,8 @@ func (c *Client) PostDialogUserIdSend(ctx context.Context, userId UserId, body P
 	return c.Client.Do(req)
 }
 
-func (c *Client) PutFriendDeleteUserId(ctx context.Context, userId UserId, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPutFriendDeleteUserIdRequest(c.Server, userId)
+func (c *Client) PutFriendDeleteUserID(ctx context.Context, userID UserID, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPutFriendDeleteUserIDRequest(c.Server, userID)
 	if err != nil {
 		return nil, err
 	}
@@ -187,8 +187,8 @@ func (c *Client) PutFriendDeleteUserId(ctx context.Context, userId UserId, reqEd
 	return c.Client.Do(req)
 }
 
-func (c *Client) PutFriendSetUserId(ctx context.Context, userId UserId, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPutFriendSetUserIdRequest(c.Server, userId)
+func (c *Client) PutFriendSetUserID(ctx context.Context, userID UserID, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPutFriendSetUserIDRequest(c.Server, userID)
 	if err != nil {
 		return nil, err
 	}
@@ -247,8 +247,8 @@ func (c *Client) PostPostCreate(ctx context.Context, body PostPostCreateJSONRequ
 	return c.Client.Do(req)
 }
 
-func (c *Client) PutPostDeleteId(ctx context.Context, id PostId, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPutPostDeleteIdRequest(c.Server, id)
+func (c *Client) PutPostDeleteID(ctx context.Context, id PostID, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPutPostDeleteIDRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -271,8 +271,8 @@ func (c *Client) GetPostFeed(ctx context.Context, params *GetPostFeedParams, req
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetPostGetId(ctx context.Context, id PostId, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetPostGetIdRequest(c.Server, id)
+func (c *Client) GetPostGetID(ctx context.Context, id PostID, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetPostGetIDRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -307,8 +307,8 @@ func (c *Client) PutPostUpdate(ctx context.Context, body PutPostUpdateJSONReques
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetUserGetId(ctx context.Context, id UserId, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetUserGetIdRequest(c.Server, id)
+func (c *Client) GetUserGetID(ctx context.Context, id UserID, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetUserGetIDRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -355,13 +355,13 @@ func (c *Client) GetUserSearch(ctx context.Context, params *GetUserSearchParams,
 	return c.Client.Do(req)
 }
 
-// NewGetDialogUserIdListRequest generates requests for GetDialogUserIdList
-func NewGetDialogUserIdListRequest(server string, userId UserId) (*http.Request, error) {
+// NewGetDialogUserIDListRequest generates requests for GetDialogUserIDList
+func NewGetDialogUserIDListRequest(server string, userID UserID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "user_id", runtime.ParamLocationPath, userId)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "user_id", runtime.ParamLocationPath, userID)
 	if err != nil {
 		return nil, err
 	}
@@ -389,24 +389,24 @@ func NewGetDialogUserIdListRequest(server string, userId UserId) (*http.Request,
 	return req, nil
 }
 
-// NewPostDialogUserIdSendRequest calls the generic PostDialogUserIdSend builder with application/json body
-func NewPostDialogUserIdSendRequest(server string, userId UserId, body PostDialogUserIdSendJSONRequestBody) (*http.Request, error) {
+// NewPostDialogUserIDSendRequest calls the generic PostDialogUserIDSend builder with application/json body
+func NewPostDialogUserIDSendRequest(server string, userID UserID, body PostDialogUserIDSendJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewPostDialogUserIdSendRequestWithBody(server, userId, "application/json", bodyReader)
+	return NewPostDialogUserIDSendRequestWithBody(server, userID, "application/json", bodyReader)
 }
 
-// NewPostDialogUserIdSendRequestWithBody generates requests for PostDialogUserIdSend with any type of body
-func NewPostDialogUserIdSendRequestWithBody(server string, userId UserId, contentType string, body io.Reader) (*http.Request, error) {
+// NewPostDialogUserIDSendRequestWithBody generates requests for PostDialogUserIDSend with any type of body
+func NewPostDialogUserIDSendRequestWithBody(server string, userID UserID, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "user_id", runtime.ParamLocationPath, userId)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "user_id", runtime.ParamLocationPath, userID)
 	if err != nil {
 		return nil, err
 	}
@@ -436,13 +436,13 @@ func NewPostDialogUserIdSendRequestWithBody(server string, userId UserId, conten
 	return req, nil
 }
 
-// NewPutFriendDeleteUserIdRequest generates requests for PutFriendDeleteUserId
-func NewPutFriendDeleteUserIdRequest(server string, userId UserId) (*http.Request, error) {
+// NewPutFriendDeleteUserIDRequest generates requests for PutFriendDeleteUserID
+func NewPutFriendDeleteUserIDRequest(server string, userID UserID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "user_id", runtime.ParamLocationPath, userId)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "user_id", runtime.ParamLocationPath, userID)
 	if err != nil {
 		return nil, err
 	}
@@ -470,13 +470,13 @@ func NewPutFriendDeleteUserIdRequest(server string, userId UserId) (*http.Reques
 	return req, nil
 }
 
-// NewPutFriendSetUserIdRequest generates requests for PutFriendSetUserId
-func NewPutFriendSetUserIdRequest(server string, userId UserId) (*http.Request, error) {
+// NewPutFriendSetUserIDRequest generates requests for PutFriendSetUserID
+func NewPutFriendSetUserIDRequest(server string, userID UserID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "user_id", runtime.ParamLocationPath, userId)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "user_id", runtime.ParamLocationPath, userID)
 	if err != nil {
 		return nil, err
 	}
@@ -584,8 +584,8 @@ func NewPostPostCreateRequestWithBody(server string, contentType string, body io
 	return req, nil
 }
 
-// NewPutPostDeleteIdRequest generates requests for PutPostDeleteId
-func NewPutPostDeleteIdRequest(server string, id PostId) (*http.Request, error) {
+// NewPutPostDeleteIDRequest generates requests for PutPostDeleteID
+func NewPutPostDeleteIDRequest(server string, id PostID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -683,8 +683,8 @@ func NewGetPostFeedRequest(server string, params *GetPostFeedParams) (*http.Requ
 	return req, nil
 }
 
-// NewGetPostGetIdRequest generates requests for GetPostGetId
-func NewGetPostGetIdRequest(server string, id PostId) (*http.Request, error) {
+// NewGetPostGetIDRequest generates requests for GetPostGetID
+func NewGetPostGetIDRequest(server string, id PostID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -757,8 +757,8 @@ func NewPutPostUpdateRequestWithBody(server string, contentType string, body io.
 	return req, nil
 }
 
-// NewGetUserGetIdRequest generates requests for GetUserGetId
-func NewGetUserGetIdRequest(server string, id UserId) (*http.Request, error) {
+// NewGetUserGetIDRequest generates requests for GetUserGetID
+func NewGetUserGetIDRequest(server string, id UserID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -931,19 +931,19 @@ func WithBaseURL(baseURL string) ClientOption {
 
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
-	// GetDialogUserIdListWithResponse request
-	GetDialogUserIdListWithResponse(ctx context.Context, userId UserId, reqEditors ...RequestEditorFn) (*GetDialogUserIdListResponse, error)
+	// GetDialogUserIDListWithResponse request
+	GetDialogUserIDListWithResponse(ctx context.Context, userID UserID, reqEditors ...RequestEditorFn) (*GetDialogUserIDListResponse, error)
 
-	// PostDialogUserIdSendWithBodyWithResponse request with any body
-	PostDialogUserIdSendWithBodyWithResponse(ctx context.Context, userId UserId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PostDialogUserIdSendResponse, error)
+	// PostDialogUserIDSendWithBodyWithResponse request with any body
+	PostDialogUserIDSendWithBodyWithResponse(ctx context.Context, userID UserID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PostDialogUserIDSendResponse, error)
 
-	PostDialogUserIdSendWithResponse(ctx context.Context, userId UserId, body PostDialogUserIdSendJSONRequestBody, reqEditors ...RequestEditorFn) (*PostDialogUserIdSendResponse, error)
+	PostDialogUserIDSendWithResponse(ctx context.Context, userID UserID, body PostDialogUserIDSendJSONRequestBody, reqEditors ...RequestEditorFn) (*PostDialogUserIDSendResponse, error)
 
-	// PutFriendDeleteUserIdWithResponse request
-	PutFriendDeleteUserIdWithResponse(ctx context.Context, userId UserId, reqEditors ...RequestEditorFn) (*PutFriendDeleteUserIdResponse, error)
+	// PutFriendDeleteUserIDWithResponse request
+	PutFriendDeleteUserIDWithResponse(ctx context.Context, userID UserID, reqEditors ...RequestEditorFn) (*PutFriendDeleteUserIDResponse, error)
 
-	// PutFriendSetUserIdWithResponse request
-	PutFriendSetUserIdWithResponse(ctx context.Context, userId UserId, reqEditors ...RequestEditorFn) (*PutFriendSetUserIdResponse, error)
+	// PutFriendSetUserIDWithResponse request
+	PutFriendSetUserIDWithResponse(ctx context.Context, userID UserID, reqEditors ...RequestEditorFn) (*PutFriendSetUserIDResponse, error)
 
 	// PostLoginWithBodyWithResponse request with any body
 	PostLoginWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PostLoginResponse, error)
@@ -955,22 +955,22 @@ type ClientWithResponsesInterface interface {
 
 	PostPostCreateWithResponse(ctx context.Context, body PostPostCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*PostPostCreateResponse, error)
 
-	// PutPostDeleteIdWithResponse request
-	PutPostDeleteIdWithResponse(ctx context.Context, id PostId, reqEditors ...RequestEditorFn) (*PutPostDeleteIdResponse, error)
+	// PutPostDeleteIDWithResponse request
+	PutPostDeleteIDWithResponse(ctx context.Context, id PostID, reqEditors ...RequestEditorFn) (*PutPostDeleteIDResponse, error)
 
 	// GetPostFeedWithResponse request
 	GetPostFeedWithResponse(ctx context.Context, params *GetPostFeedParams, reqEditors ...RequestEditorFn) (*GetPostFeedResponse, error)
 
-	// GetPostGetIdWithResponse request
-	GetPostGetIdWithResponse(ctx context.Context, id PostId, reqEditors ...RequestEditorFn) (*GetPostGetIdResponse, error)
+	// GetPostGetIDWithResponse request
+	GetPostGetIDWithResponse(ctx context.Context, id PostID, reqEditors ...RequestEditorFn) (*GetPostGetIDResponse, error)
 
 	// PutPostUpdateWithBodyWithResponse request with any body
 	PutPostUpdateWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PutPostUpdateResponse, error)
 
 	PutPostUpdateWithResponse(ctx context.Context, body PutPostUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*PutPostUpdateResponse, error)
 
-	// GetUserGetIdWithResponse request
-	GetUserGetIdWithResponse(ctx context.Context, id UserId, reqEditors ...RequestEditorFn) (*GetUserGetIdResponse, error)
+	// GetUserGetIDWithResponse request
+	GetUserGetIDWithResponse(ctx context.Context, id UserID, reqEditors ...RequestEditorFn) (*GetUserGetIDResponse, error)
 
 	// PostUserRegisterWithBodyWithResponse request with any body
 	PostUserRegisterWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PostUserRegisterResponse, error)
@@ -981,16 +981,16 @@ type ClientWithResponsesInterface interface {
 	GetUserSearchWithResponse(ctx context.Context, params *GetUserSearchParams, reqEditors ...RequestEditorFn) (*GetUserSearchResponse, error)
 }
 
-type GetDialogUserIdListResponse struct {
+type GetDialogUserIDListResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *[]DialogMessage
-	JSON500      *N5xx
-	JSON503      *N5xx
+	JSON500      *N5Xx
+	JSON503      *N5Xx
 }
 
 // Status returns HTTPResponse.Status
-func (r GetDialogUserIdListResponse) Status() string {
+func (r GetDialogUserIDListResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -998,22 +998,22 @@ func (r GetDialogUserIdListResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetDialogUserIdListResponse) StatusCode() int {
+func (r GetDialogUserIDListResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type PostDialogUserIdSendResponse struct {
+type PostDialogUserIDSendResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON500      *N5xx
-	JSON503      *N5xx
+	JSON500      *N5Xx
+	JSON503      *N5Xx
 }
 
 // Status returns HTTPResponse.Status
-func (r PostDialogUserIdSendResponse) Status() string {
+func (r PostDialogUserIDSendResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -1021,22 +1021,22 @@ func (r PostDialogUserIdSendResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r PostDialogUserIdSendResponse) StatusCode() int {
+func (r PostDialogUserIDSendResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type PutFriendDeleteUserIdResponse struct {
+type PutFriendDeleteUserIDResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON500      *N5xx
-	JSON503      *N5xx
+	JSON500      *N5Xx
+	JSON503      *N5Xx
 }
 
 // Status returns HTTPResponse.Status
-func (r PutFriendDeleteUserIdResponse) Status() string {
+func (r PutFriendDeleteUserIDResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -1044,22 +1044,22 @@ func (r PutFriendDeleteUserIdResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r PutFriendDeleteUserIdResponse) StatusCode() int {
+func (r PutFriendDeleteUserIDResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type PutFriendSetUserIdResponse struct {
+type PutFriendSetUserIDResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON500      *N5xx
-	JSON503      *N5xx
+	JSON500      *N5Xx
+	JSON503      *N5Xx
 }
 
 // Status returns HTTPResponse.Status
-func (r PutFriendSetUserIdResponse) Status() string {
+func (r PutFriendSetUserIDResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -1067,7 +1067,7 @@ func (r PutFriendSetUserIdResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r PutFriendSetUserIdResponse) StatusCode() int {
+func (r PutFriendSetUserIDResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -1080,8 +1080,8 @@ type PostLoginResponse struct {
 	JSON200      *struct {
 		Token *string `json:"token,omitempty"`
 	}
-	JSON500 *N5xx
-	JSON503 *N5xx
+	JSON500 *N5Xx
+	JSON503 *N5Xx
 }
 
 // Status returns HTTPResponse.Status
@@ -1103,9 +1103,9 @@ func (r PostLoginResponse) StatusCode() int {
 type PostPostCreateResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *PostId
-	JSON500      *N5xx
-	JSON503      *N5xx
+	JSON200      *PostID
+	JSON500      *N5Xx
+	JSON503      *N5Xx
 }
 
 // Status returns HTTPResponse.Status
@@ -1124,15 +1124,15 @@ func (r PostPostCreateResponse) StatusCode() int {
 	return 0
 }
 
-type PutPostDeleteIdResponse struct {
+type PutPostDeleteIDResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON500      *N5xx
-	JSON503      *N5xx
+	JSON500      *N5Xx
+	JSON503      *N5Xx
 }
 
 // Status returns HTTPResponse.Status
-func (r PutPostDeleteIdResponse) Status() string {
+func (r PutPostDeleteIDResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -1140,7 +1140,7 @@ func (r PutPostDeleteIdResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r PutPostDeleteIdResponse) StatusCode() int {
+func (r PutPostDeleteIDResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -1151,8 +1151,8 @@ type GetPostFeedResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *[]Post
-	JSON500      *N5xx
-	JSON503      *N5xx
+	JSON500      *N5Xx
+	JSON503      *N5Xx
 }
 
 // Status returns HTTPResponse.Status
@@ -1171,16 +1171,16 @@ func (r GetPostFeedResponse) StatusCode() int {
 	return 0
 }
 
-type GetPostGetIdResponse struct {
+type GetPostGetIDResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *Post
-	JSON500      *N5xx
-	JSON503      *N5xx
+	JSON500      *N5Xx
+	JSON503      *N5Xx
 }
 
 // Status returns HTTPResponse.Status
-func (r GetPostGetIdResponse) Status() string {
+func (r GetPostGetIDResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -1188,7 +1188,7 @@ func (r GetPostGetIdResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetPostGetIdResponse) StatusCode() int {
+func (r GetPostGetIDResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -1198,8 +1198,8 @@ func (r GetPostGetIdResponse) StatusCode() int {
 type PutPostUpdateResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON500      *N5xx
-	JSON503      *N5xx
+	JSON500      *N5Xx
+	JSON503      *N5Xx
 }
 
 // Status returns HTTPResponse.Status
@@ -1218,16 +1218,16 @@ func (r PutPostUpdateResponse) StatusCode() int {
 	return 0
 }
 
-type GetUserGetIdResponse struct {
+type GetUserGetIDResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *User
-	JSON500      *N5xx
-	JSON503      *N5xx
+	JSON500      *N5Xx
+	JSON503      *N5Xx
 }
 
 // Status returns HTTPResponse.Status
-func (r GetUserGetIdResponse) Status() string {
+func (r GetUserGetIDResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -1235,7 +1235,7 @@ func (r GetUserGetIdResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetUserGetIdResponse) StatusCode() int {
+func (r GetUserGetIDResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -1246,10 +1246,10 @@ type PostUserRegisterResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		UserId *string `json:"user_id,omitempty"`
+		UserID *string `json:"user_id,omitempty"`
 	}
-	JSON500 *N5xx
-	JSON503 *N5xx
+	JSON500 *N5Xx
+	JSON503 *N5Xx
 }
 
 // Status returns HTTPResponse.Status
@@ -1272,8 +1272,8 @@ type GetUserSearchResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *[]User
-	JSON500      *N5xx
-	JSON503      *N5xx
+	JSON500      *N5Xx
+	JSON503      *N5Xx
 }
 
 // Status returns HTTPResponse.Status
@@ -1292,48 +1292,48 @@ func (r GetUserSearchResponse) StatusCode() int {
 	return 0
 }
 
-// GetDialogUserIdListWithResponse request returning *GetDialogUserIdListResponse
-func (c *ClientWithResponses) GetDialogUserIdListWithResponse(ctx context.Context, userId UserId, reqEditors ...RequestEditorFn) (*GetDialogUserIdListResponse, error) {
-	rsp, err := c.GetDialogUserIdList(ctx, userId, reqEditors...)
+// GetDialogUserIDListWithResponse request returning *GetDialogUserIDListResponse
+func (c *ClientWithResponses) GetDialogUserIDListWithResponse(ctx context.Context, userID UserID, reqEditors ...RequestEditorFn) (*GetDialogUserIDListResponse, error) {
+	rsp, err := c.GetDialogUserIDList(ctx, userID, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetDialogUserIdListResponse(rsp)
+	return ParseGetDialogUserIDListResponse(rsp)
 }
 
-// PostDialogUserIdSendWithBodyWithResponse request with arbitrary body returning *PostDialogUserIdSendResponse
-func (c *ClientWithResponses) PostDialogUserIdSendWithBodyWithResponse(ctx context.Context, userId UserId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PostDialogUserIdSendResponse, error) {
-	rsp, err := c.PostDialogUserIdSendWithBody(ctx, userId, contentType, body, reqEditors...)
+// PostDialogUserIDSendWithBodyWithResponse request with arbitrary body returning *PostDialogUserIDSendResponse
+func (c *ClientWithResponses) PostDialogUserIDSendWithBodyWithResponse(ctx context.Context, userID UserID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PostDialogUserIDSendResponse, error) {
+	rsp, err := c.PostDialogUserIDSendWithBody(ctx, userID, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParsePostDialogUserIdSendResponse(rsp)
+	return ParsePostDialogUserIDSendResponse(rsp)
 }
 
-func (c *ClientWithResponses) PostDialogUserIdSendWithResponse(ctx context.Context, userId UserId, body PostDialogUserIdSendJSONRequestBody, reqEditors ...RequestEditorFn) (*PostDialogUserIdSendResponse, error) {
-	rsp, err := c.PostDialogUserIdSend(ctx, userId, body, reqEditors...)
+func (c *ClientWithResponses) PostDialogUserIDSendWithResponse(ctx context.Context, userID UserID, body PostDialogUserIDSendJSONRequestBody, reqEditors ...RequestEditorFn) (*PostDialogUserIDSendResponse, error) {
+	rsp, err := c.PostDialogUserIDSend(ctx, userID, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParsePostDialogUserIdSendResponse(rsp)
+	return ParsePostDialogUserIDSendResponse(rsp)
 }
 
-// PutFriendDeleteUserIdWithResponse request returning *PutFriendDeleteUserIdResponse
-func (c *ClientWithResponses) PutFriendDeleteUserIdWithResponse(ctx context.Context, userId UserId, reqEditors ...RequestEditorFn) (*PutFriendDeleteUserIdResponse, error) {
-	rsp, err := c.PutFriendDeleteUserId(ctx, userId, reqEditors...)
+// PutFriendDeleteUserIDWithResponse request returning *PutFriendDeleteUserIDResponse
+func (c *ClientWithResponses) PutFriendDeleteUserIDWithResponse(ctx context.Context, userID UserID, reqEditors ...RequestEditorFn) (*PutFriendDeleteUserIDResponse, error) {
+	rsp, err := c.PutFriendDeleteUserID(ctx, userID, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParsePutFriendDeleteUserIdResponse(rsp)
+	return ParsePutFriendDeleteUserIDResponse(rsp)
 }
 
-// PutFriendSetUserIdWithResponse request returning *PutFriendSetUserIdResponse
-func (c *ClientWithResponses) PutFriendSetUserIdWithResponse(ctx context.Context, userId UserId, reqEditors ...RequestEditorFn) (*PutFriendSetUserIdResponse, error) {
-	rsp, err := c.PutFriendSetUserId(ctx, userId, reqEditors...)
+// PutFriendSetUserIDWithResponse request returning *PutFriendSetUserIDResponse
+func (c *ClientWithResponses) PutFriendSetUserIDWithResponse(ctx context.Context, userID UserID, reqEditors ...RequestEditorFn) (*PutFriendSetUserIDResponse, error) {
+	rsp, err := c.PutFriendSetUserID(ctx, userID, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParsePutFriendSetUserIdResponse(rsp)
+	return ParsePutFriendSetUserIDResponse(rsp)
 }
 
 // PostLoginWithBodyWithResponse request with arbitrary body returning *PostLoginResponse
@@ -1370,13 +1370,13 @@ func (c *ClientWithResponses) PostPostCreateWithResponse(ctx context.Context, bo
 	return ParsePostPostCreateResponse(rsp)
 }
 
-// PutPostDeleteIdWithResponse request returning *PutPostDeleteIdResponse
-func (c *ClientWithResponses) PutPostDeleteIdWithResponse(ctx context.Context, id PostId, reqEditors ...RequestEditorFn) (*PutPostDeleteIdResponse, error) {
-	rsp, err := c.PutPostDeleteId(ctx, id, reqEditors...)
+// PutPostDeleteIDWithResponse request returning *PutPostDeleteIDResponse
+func (c *ClientWithResponses) PutPostDeleteIDWithResponse(ctx context.Context, id PostID, reqEditors ...RequestEditorFn) (*PutPostDeleteIDResponse, error) {
+	rsp, err := c.PutPostDeleteID(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParsePutPostDeleteIdResponse(rsp)
+	return ParsePutPostDeleteIDResponse(rsp)
 }
 
 // GetPostFeedWithResponse request returning *GetPostFeedResponse
@@ -1388,13 +1388,13 @@ func (c *ClientWithResponses) GetPostFeedWithResponse(ctx context.Context, param
 	return ParseGetPostFeedResponse(rsp)
 }
 
-// GetPostGetIdWithResponse request returning *GetPostGetIdResponse
-func (c *ClientWithResponses) GetPostGetIdWithResponse(ctx context.Context, id PostId, reqEditors ...RequestEditorFn) (*GetPostGetIdResponse, error) {
-	rsp, err := c.GetPostGetId(ctx, id, reqEditors...)
+// GetPostGetIDWithResponse request returning *GetPostGetIDResponse
+func (c *ClientWithResponses) GetPostGetIDWithResponse(ctx context.Context, id PostID, reqEditors ...RequestEditorFn) (*GetPostGetIDResponse, error) {
+	rsp, err := c.GetPostGetID(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetPostGetIdResponse(rsp)
+	return ParseGetPostGetIDResponse(rsp)
 }
 
 // PutPostUpdateWithBodyWithResponse request with arbitrary body returning *PutPostUpdateResponse
@@ -1414,13 +1414,13 @@ func (c *ClientWithResponses) PutPostUpdateWithResponse(ctx context.Context, bod
 	return ParsePutPostUpdateResponse(rsp)
 }
 
-// GetUserGetIdWithResponse request returning *GetUserGetIdResponse
-func (c *ClientWithResponses) GetUserGetIdWithResponse(ctx context.Context, id UserId, reqEditors ...RequestEditorFn) (*GetUserGetIdResponse, error) {
-	rsp, err := c.GetUserGetId(ctx, id, reqEditors...)
+// GetUserGetIDWithResponse request returning *GetUserGetIDResponse
+func (c *ClientWithResponses) GetUserGetIDWithResponse(ctx context.Context, id UserID, reqEditors ...RequestEditorFn) (*GetUserGetIDResponse, error) {
+	rsp, err := c.GetUserGetID(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetUserGetIdResponse(rsp)
+	return ParseGetUserGetIDResponse(rsp)
 }
 
 // PostUserRegisterWithBodyWithResponse request with arbitrary body returning *PostUserRegisterResponse
@@ -1449,15 +1449,15 @@ func (c *ClientWithResponses) GetUserSearchWithResponse(ctx context.Context, par
 	return ParseGetUserSearchResponse(rsp)
 }
 
-// ParseGetDialogUserIdListResponse parses an HTTP response from a GetDialogUserIdListWithResponse call
-func ParseGetDialogUserIdListResponse(rsp *http.Response) (*GetDialogUserIdListResponse, error) {
+// ParseGetDialogUserIDListResponse parses an HTTP response from a GetDialogUserIDListWithResponse call
+func ParseGetDialogUserIDListResponse(rsp *http.Response) (*GetDialogUserIDListResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetDialogUserIdListResponse{
+	response := &GetDialogUserIDListResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -1471,14 +1471,14 @@ func ParseGetDialogUserIdListResponse(rsp *http.Response) (*GetDialogUserIdListR
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1489,29 +1489,29 @@ func ParseGetDialogUserIdListResponse(rsp *http.Response) (*GetDialogUserIdListR
 	return response, nil
 }
 
-// ParsePostDialogUserIdSendResponse parses an HTTP response from a PostDialogUserIdSendWithResponse call
-func ParsePostDialogUserIdSendResponse(rsp *http.Response) (*PostDialogUserIdSendResponse, error) {
+// ParsePostDialogUserIDSendResponse parses an HTTP response from a PostDialogUserIDSendWithResponse call
+func ParsePostDialogUserIDSendResponse(rsp *http.Response) (*PostDialogUserIDSendResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &PostDialogUserIdSendResponse{
+	response := &PostDialogUserIDSendResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1522,29 +1522,29 @@ func ParsePostDialogUserIdSendResponse(rsp *http.Response) (*PostDialogUserIdSen
 	return response, nil
 }
 
-// ParsePutFriendDeleteUserIdResponse parses an HTTP response from a PutFriendDeleteUserIdWithResponse call
-func ParsePutFriendDeleteUserIdResponse(rsp *http.Response) (*PutFriendDeleteUserIdResponse, error) {
+// ParsePutFriendDeleteUserIDResponse parses an HTTP response from a PutFriendDeleteUserIDWithResponse call
+func ParsePutFriendDeleteUserIDResponse(rsp *http.Response) (*PutFriendDeleteUserIDResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &PutFriendDeleteUserIdResponse{
+	response := &PutFriendDeleteUserIDResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1555,29 +1555,29 @@ func ParsePutFriendDeleteUserIdResponse(rsp *http.Response) (*PutFriendDeleteUse
 	return response, nil
 }
 
-// ParsePutFriendSetUserIdResponse parses an HTTP response from a PutFriendSetUserIdWithResponse call
-func ParsePutFriendSetUserIdResponse(rsp *http.Response) (*PutFriendSetUserIdResponse, error) {
+// ParsePutFriendSetUserIDResponse parses an HTTP response from a PutFriendSetUserIDWithResponse call
+func ParsePutFriendSetUserIDResponse(rsp *http.Response) (*PutFriendSetUserIDResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &PutFriendSetUserIdResponse{
+	response := &PutFriendSetUserIDResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1612,14 +1612,14 @@ func ParsePostLoginResponse(rsp *http.Response) (*PostLoginResponse, error) {
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1645,21 +1645,21 @@ func ParsePostPostCreateResponse(rsp *http.Response) (*PostPostCreateResponse, e
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest PostId
+		var dest PostID
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1670,29 +1670,29 @@ func ParsePostPostCreateResponse(rsp *http.Response) (*PostPostCreateResponse, e
 	return response, nil
 }
 
-// ParsePutPostDeleteIdResponse parses an HTTP response from a PutPostDeleteIdWithResponse call
-func ParsePutPostDeleteIdResponse(rsp *http.Response) (*PutPostDeleteIdResponse, error) {
+// ParsePutPostDeleteIDResponse parses an HTTP response from a PutPostDeleteIDWithResponse call
+func ParsePutPostDeleteIDResponse(rsp *http.Response) (*PutPostDeleteIDResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &PutPostDeleteIdResponse{
+	response := &PutPostDeleteIDResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1725,14 +1725,14 @@ func ParseGetPostFeedResponse(rsp *http.Response) (*GetPostFeedResponse, error) 
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1743,15 +1743,15 @@ func ParseGetPostFeedResponse(rsp *http.Response) (*GetPostFeedResponse, error) 
 	return response, nil
 }
 
-// ParseGetPostGetIdResponse parses an HTTP response from a GetPostGetIdWithResponse call
-func ParseGetPostGetIdResponse(rsp *http.Response) (*GetPostGetIdResponse, error) {
+// ParseGetPostGetIDResponse parses an HTTP response from a GetPostGetIDWithResponse call
+func ParseGetPostGetIDResponse(rsp *http.Response) (*GetPostGetIDResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetPostGetIdResponse{
+	response := &GetPostGetIDResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -1765,14 +1765,14 @@ func ParseGetPostGetIdResponse(rsp *http.Response) (*GetPostGetIdResponse, error
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1798,14 +1798,14 @@ func ParsePutPostUpdateResponse(rsp *http.Response) (*PutPostUpdateResponse, err
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1816,15 +1816,15 @@ func ParsePutPostUpdateResponse(rsp *http.Response) (*PutPostUpdateResponse, err
 	return response, nil
 }
 
-// ParseGetUserGetIdResponse parses an HTTP response from a GetUserGetIdWithResponse call
-func ParseGetUserGetIdResponse(rsp *http.Response) (*GetUserGetIdResponse, error) {
+// ParseGetUserGetIDResponse parses an HTTP response from a GetUserGetIDWithResponse call
+func ParseGetUserGetIDResponse(rsp *http.Response) (*GetUserGetIDResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetUserGetIdResponse{
+	response := &GetUserGetIDResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -1838,14 +1838,14 @@ func ParseGetUserGetIdResponse(rsp *http.Response) (*GetUserGetIdResponse, error
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1872,7 +1872,7 @@ func ParsePostUserRegisterResponse(rsp *http.Response) (*PostUserRegisterRespons
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			UserId *string `json:"user_id,omitempty"`
+			UserID *string `json:"user_id,omitempty"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -1880,14 +1880,14 @@ func ParsePostUserRegisterResponse(rsp *http.Response) (*PostUserRegisterRespons
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1920,14 +1920,14 @@ func ParseGetUserSearchResponse(rsp *http.Response) (*GetUserSearchResponse, err
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N5xx
+		var dest N5Xx
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

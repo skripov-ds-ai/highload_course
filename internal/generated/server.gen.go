@@ -16,16 +16,16 @@ import (
 type ServerInterface interface {
 
 	// (GET /dialog/{user_id}/list)
-	GetDialogUserIdList(w http.ResponseWriter, r *http.Request, userId UserId)
+	GetDialogUserIDList(w http.ResponseWriter, r *http.Request, userID UserID)
 
 	// (POST /dialog/{user_id}/send)
-	PostDialogUserIdSend(w http.ResponseWriter, r *http.Request, userId UserId)
+	PostDialogUserIDSend(w http.ResponseWriter, r *http.Request, userID UserID)
 
 	// (PUT /friend/delete/{user_id})
-	PutFriendDeleteUserId(w http.ResponseWriter, r *http.Request, userId UserId)
+	PutFriendDeleteUserID(w http.ResponseWriter, r *http.Request, userID UserID)
 
 	// (PUT /friend/set/{user_id})
-	PutFriendSetUserId(w http.ResponseWriter, r *http.Request, userId UserId)
+	PutFriendSetUserID(w http.ResponseWriter, r *http.Request, userID UserID)
 
 	// (POST /login)
 	PostLogin(w http.ResponseWriter, r *http.Request)
@@ -34,19 +34,19 @@ type ServerInterface interface {
 	PostPostCreate(w http.ResponseWriter, r *http.Request)
 
 	// (PUT /post/delete/{id})
-	PutPostDeleteId(w http.ResponseWriter, r *http.Request, id PostId)
+	PutPostDeleteID(w http.ResponseWriter, r *http.Request, id PostID)
 
 	// (GET /post/feed)
 	GetPostFeed(w http.ResponseWriter, r *http.Request, params GetPostFeedParams)
 
 	// (GET /post/get/{id})
-	GetPostGetId(w http.ResponseWriter, r *http.Request, id PostId)
+	GetPostGetID(w http.ResponseWriter, r *http.Request, id PostID)
 
 	// (PUT /post/update)
 	PutPostUpdate(w http.ResponseWriter, r *http.Request)
 
 	// (GET /user/get/{id})
-	GetUserGetId(w http.ResponseWriter, r *http.Request, id UserId)
+	GetUserGetID(w http.ResponseWriter, r *http.Request, id UserID)
 
 	// (POST /user/register)
 	PostUserRegister(w http.ResponseWriter, r *http.Request)
@@ -60,22 +60,22 @@ type ServerInterface interface {
 type Unimplemented struct{}
 
 // (GET /dialog/{user_id}/list)
-func (_ Unimplemented) GetDialogUserIdList(w http.ResponseWriter, r *http.Request, userId UserId) {
+func (_ Unimplemented) GetDialogUserIDList(w http.ResponseWriter, r *http.Request, userID UserID) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
 // (POST /dialog/{user_id}/send)
-func (_ Unimplemented) PostDialogUserIdSend(w http.ResponseWriter, r *http.Request, userId UserId) {
+func (_ Unimplemented) PostDialogUserIDSend(w http.ResponseWriter, r *http.Request, userID UserID) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
 // (PUT /friend/delete/{user_id})
-func (_ Unimplemented) PutFriendDeleteUserId(w http.ResponseWriter, r *http.Request, userId UserId) {
+func (_ Unimplemented) PutFriendDeleteUserID(w http.ResponseWriter, r *http.Request, userID UserID) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
 // (PUT /friend/set/{user_id})
-func (_ Unimplemented) PutFriendSetUserId(w http.ResponseWriter, r *http.Request, userId UserId) {
+func (_ Unimplemented) PutFriendSetUserID(w http.ResponseWriter, r *http.Request, userID UserID) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
@@ -90,7 +90,7 @@ func (_ Unimplemented) PostPostCreate(w http.ResponseWriter, r *http.Request) {
 }
 
 // (PUT /post/delete/{id})
-func (_ Unimplemented) PutPostDeleteId(w http.ResponseWriter, r *http.Request, id PostId) {
+func (_ Unimplemented) PutPostDeleteID(w http.ResponseWriter, r *http.Request, id PostID) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
@@ -100,7 +100,7 @@ func (_ Unimplemented) GetPostFeed(w http.ResponseWriter, r *http.Request, param
 }
 
 // (GET /post/get/{id})
-func (_ Unimplemented) GetPostGetId(w http.ResponseWriter, r *http.Request, id PostId) {
+func (_ Unimplemented) GetPostGetID(w http.ResponseWriter, r *http.Request, id PostID) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
@@ -110,7 +110,7 @@ func (_ Unimplemented) PutPostUpdate(w http.ResponseWriter, r *http.Request) {
 }
 
 // (GET /user/get/{id})
-func (_ Unimplemented) GetUserGetId(w http.ResponseWriter, r *http.Request, id UserId) {
+func (_ Unimplemented) GetUserGetID(w http.ResponseWriter, r *http.Request, id UserID) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
@@ -133,16 +133,16 @@ type ServerInterfaceWrapper struct {
 
 type MiddlewareFunc func(http.Handler) http.Handler
 
-// GetDialogUserIdList operation middleware
-func (siw *ServerInterfaceWrapper) GetDialogUserIdList(w http.ResponseWriter, r *http.Request) {
+// GetDialogUserIDList operation middleware
+func (siw *ServerInterfaceWrapper) GetDialogUserIDList(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	var err error
 
 	// ------------- Path parameter "user_id" -------------
-	var userId UserId
+	var userID UserID
 
-	err = runtime.BindStyledParameterWithOptions("simple", "user_id", chi.URLParam(r, "user_id"), &userId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "user_id", chi.URLParam(r, "user_id"), &userID, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
 		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "user_id", Err: err})
 		return
@@ -151,7 +151,7 @@ func (siw *ServerInterfaceWrapper) GetDialogUserIdList(w http.ResponseWriter, r 
 	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetDialogUserIdList(w, r, userId)
+		siw.Handler.GetDialogUserIDList(w, r, userID)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -161,16 +161,16 @@ func (siw *ServerInterfaceWrapper) GetDialogUserIdList(w http.ResponseWriter, r 
 	handler.ServeHTTP(w, r.WithContext(ctx))
 }
 
-// PostDialogUserIdSend operation middleware
-func (siw *ServerInterfaceWrapper) PostDialogUserIdSend(w http.ResponseWriter, r *http.Request) {
+// PostDialogUserIDSend operation middleware
+func (siw *ServerInterfaceWrapper) PostDialogUserIDSend(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	var err error
 
 	// ------------- Path parameter "user_id" -------------
-	var userId UserId
+	var userID UserID
 
-	err = runtime.BindStyledParameterWithOptions("simple", "user_id", chi.URLParam(r, "user_id"), &userId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "user_id", chi.URLParam(r, "user_id"), &userID, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
 		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "user_id", Err: err})
 		return
@@ -179,7 +179,7 @@ func (siw *ServerInterfaceWrapper) PostDialogUserIdSend(w http.ResponseWriter, r
 	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostDialogUserIdSend(w, r, userId)
+		siw.Handler.PostDialogUserIDSend(w, r, userID)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -189,16 +189,16 @@ func (siw *ServerInterfaceWrapper) PostDialogUserIdSend(w http.ResponseWriter, r
 	handler.ServeHTTP(w, r.WithContext(ctx))
 }
 
-// PutFriendDeleteUserId operation middleware
-func (siw *ServerInterfaceWrapper) PutFriendDeleteUserId(w http.ResponseWriter, r *http.Request) {
+// PutFriendDeleteUserID operation middleware
+func (siw *ServerInterfaceWrapper) PutFriendDeleteUserID(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	var err error
 
 	// ------------- Path parameter "user_id" -------------
-	var userId UserId
+	var userID UserID
 
-	err = runtime.BindStyledParameterWithOptions("simple", "user_id", chi.URLParam(r, "user_id"), &userId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "user_id", chi.URLParam(r, "user_id"), &userID, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
 		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "user_id", Err: err})
 		return
@@ -207,7 +207,7 @@ func (siw *ServerInterfaceWrapper) PutFriendDeleteUserId(w http.ResponseWriter, 
 	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PutFriendDeleteUserId(w, r, userId)
+		siw.Handler.PutFriendDeleteUserID(w, r, userID)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -217,16 +217,16 @@ func (siw *ServerInterfaceWrapper) PutFriendDeleteUserId(w http.ResponseWriter, 
 	handler.ServeHTTP(w, r.WithContext(ctx))
 }
 
-// PutFriendSetUserId operation middleware
-func (siw *ServerInterfaceWrapper) PutFriendSetUserId(w http.ResponseWriter, r *http.Request) {
+// PutFriendSetUserID operation middleware
+func (siw *ServerInterfaceWrapper) PutFriendSetUserID(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	var err error
 
 	// ------------- Path parameter "user_id" -------------
-	var userId UserId
+	var userID UserID
 
-	err = runtime.BindStyledParameterWithOptions("simple", "user_id", chi.URLParam(r, "user_id"), &userId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "user_id", chi.URLParam(r, "user_id"), &userID, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
 		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "user_id", Err: err})
 		return
@@ -235,7 +235,7 @@ func (siw *ServerInterfaceWrapper) PutFriendSetUserId(w http.ResponseWriter, r *
 	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PutFriendSetUserId(w, r, userId)
+		siw.Handler.PutFriendSetUserID(w, r, userID)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -277,14 +277,14 @@ func (siw *ServerInterfaceWrapper) PostPostCreate(w http.ResponseWriter, r *http
 	handler.ServeHTTP(w, r.WithContext(ctx))
 }
 
-// PutPostDeleteId operation middleware
-func (siw *ServerInterfaceWrapper) PutPostDeleteId(w http.ResponseWriter, r *http.Request) {
+// PutPostDeleteID operation middleware
+func (siw *ServerInterfaceWrapper) PutPostDeleteID(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	var err error
 
 	// ------------- Path parameter "id" -------------
-	var id PostId
+	var id PostID
 
 	err = runtime.BindStyledParameterWithOptions("simple", "id", chi.URLParam(r, "id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -295,7 +295,7 @@ func (siw *ServerInterfaceWrapper) PutPostDeleteId(w http.ResponseWriter, r *htt
 	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PutPostDeleteId(w, r, id)
+		siw.Handler.PutPostDeleteID(w, r, id)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -343,14 +343,14 @@ func (siw *ServerInterfaceWrapper) GetPostFeed(w http.ResponseWriter, r *http.Re
 	handler.ServeHTTP(w, r.WithContext(ctx))
 }
 
-// GetPostGetId operation middleware
-func (siw *ServerInterfaceWrapper) GetPostGetId(w http.ResponseWriter, r *http.Request) {
+// GetPostGetID operation middleware
+func (siw *ServerInterfaceWrapper) GetPostGetID(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	var err error
 
 	// ------------- Path parameter "id" -------------
-	var id PostId
+	var id PostID
 
 	err = runtime.BindStyledParameterWithOptions("simple", "id", chi.URLParam(r, "id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -359,7 +359,7 @@ func (siw *ServerInterfaceWrapper) GetPostGetId(w http.ResponseWriter, r *http.R
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetPostGetId(w, r, id)
+		siw.Handler.GetPostGetID(w, r, id)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -386,14 +386,14 @@ func (siw *ServerInterfaceWrapper) PutPostUpdate(w http.ResponseWriter, r *http.
 	handler.ServeHTTP(w, r.WithContext(ctx))
 }
 
-// GetUserGetId operation middleware
-func (siw *ServerInterfaceWrapper) GetUserGetId(w http.ResponseWriter, r *http.Request) {
+// GetUserGetID operation middleware
+func (siw *ServerInterfaceWrapper) GetUserGetID(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	var err error
 
 	// ------------- Path parameter "id" -------------
-	var id UserId
+	var id UserID
 
 	err = runtime.BindStyledParameterWithOptions("simple", "id", chi.URLParam(r, "id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -402,7 +402,7 @@ func (siw *ServerInterfaceWrapper) GetUserGetId(w http.ResponseWriter, r *http.R
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetUserGetId(w, r, id)
+		siw.Handler.GetUserGetID(w, r, id)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -591,16 +591,16 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/dialog/{user_id}/list", wrapper.GetDialogUserIdList)
+		r.Get(options.BaseURL+"/dialog/{user_id}/list", wrapper.GetDialogUserIDList)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/dialog/{user_id}/send", wrapper.PostDialogUserIdSend)
+		r.Post(options.BaseURL+"/dialog/{user_id}/send", wrapper.PostDialogUserIDSend)
 	})
 	r.Group(func(r chi.Router) {
-		r.Put(options.BaseURL+"/friend/delete/{user_id}", wrapper.PutFriendDeleteUserId)
+		r.Put(options.BaseURL+"/friend/delete/{user_id}", wrapper.PutFriendDeleteUserID)
 	})
 	r.Group(func(r chi.Router) {
-		r.Put(options.BaseURL+"/friend/set/{user_id}", wrapper.PutFriendSetUserId)
+		r.Put(options.BaseURL+"/friend/set/{user_id}", wrapper.PutFriendSetUserID)
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/login", wrapper.PostLogin)
@@ -609,19 +609,19 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Post(options.BaseURL+"/post/create", wrapper.PostPostCreate)
 	})
 	r.Group(func(r chi.Router) {
-		r.Put(options.BaseURL+"/post/delete/{id}", wrapper.PutPostDeleteId)
+		r.Put(options.BaseURL+"/post/delete/{id}", wrapper.PutPostDeleteID)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/post/feed", wrapper.GetPostFeed)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/post/get/{id}", wrapper.GetPostGetId)
+		r.Get(options.BaseURL+"/post/get/{id}", wrapper.GetPostGetID)
 	})
 	r.Group(func(r chi.Router) {
 		r.Put(options.BaseURL+"/post/update", wrapper.PutPostUpdate)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/user/get/{id}", wrapper.GetUserGetId)
+		r.Get(options.BaseURL+"/user/get/{id}", wrapper.GetUserGetID)
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/user/register", wrapper.PostUserRegister)

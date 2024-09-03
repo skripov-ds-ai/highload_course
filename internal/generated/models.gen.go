@@ -17,13 +17,13 @@ type BirthDate = openapi_types.Date
 // DialogMessage defines model for DialogMessage.
 type DialogMessage struct {
 	// From Идентификатор пользователя
-	From UserId `json:"from"`
+	From UserID `json:"from"`
 
 	// Text Текст сообщения
 	Text DialogMessageText `json:"text"`
 
 	// To Идентификатор пользователя
-	To UserId `json:"to"`
+	To UserID `json:"to"`
 }
 
 // DialogMessageText Текст сообщения
@@ -31,18 +31,18 @@ type DialogMessageText = string
 
 // Post Пост пользователя
 type Post struct {
-	// AuthorUserId Идентификатор пользователя
-	AuthorUserId *UserId `json:"author_user_id,omitempty"`
+	// AuthorUserID Идентификатор пользователя
+	AuthorUserID UserID `json:"author_user_id"`
 
-	// Id Идентификатор поста
-	Id *PostId `json:"id,omitempty"`
+	// ID Идентификатор поста
+	ID PostID `json:"id"`
 
 	// Text Текст поста
-	Text *PostText `json:"text,omitempty"`
+	Text PostText `json:"text"`
 }
 
-// PostId Идентификатор поста
-type PostId = string
+// PostID Идентификатор поста
+type PostID = string
 
 // PostText Текст поста
 type PostText = string
@@ -53,47 +53,47 @@ type User struct {
 	Biography *string `json:"biography,omitempty"`
 
 	// Birthdate Дата рождения
-	Birthdate *BirthDate `json:"birthdate,omitempty"`
+	Birthdate BirthDate `json:"birthdate"`
 
 	// City Город
 	City *string `json:"city,omitempty"`
 
 	// FirstName Имя
-	FirstName *string `json:"first_name,omitempty"`
+	FirstName string `json:"first_name"`
 
-	// Id Идентификатор пользователя
-	Id *UserId `json:"id,omitempty"`
+	// ID Идентификатор пользователя
+	ID UserID `json:"id"`
 
 	// SecondName Фамилия
-	SecondName *string `json:"second_name,omitempty"`
+	SecondName string `json:"second_name"`
 }
 
-// UserId Идентификатор пользователя
-type UserId = string
+// UserID Идентификатор пользователя
+type UserID = string
 
-// N5xx defines model for 5xx.
-type N5xx struct {
+// N5Xx defines model for 5xx.
+type N5Xx struct {
 	// Code Код ошибки. Предназначен для классификации проблем и более быстрого решения проблем.
-	Code *int `json:"code,omitempty"`
+	Code int `json:"code"`
 
 	// Message Описание ошибки
 	Message string `json:"message"`
 
-	// RequestId Идентификатор запроса. Предназначен для более быстрого поиска проблем.
-	RequestId *string `json:"request_id,omitempty"`
+	// RequestID Идентификатор запроса. Предназначен для более быстрого поиска проблем.
+	RequestID *string `json:"request_id,omitempty"`
 }
 
-// PostDialogUserIdSendJSONBody defines parameters for PostDialogUserIdSend.
-type PostDialogUserIdSendJSONBody struct {
+// PostDialogUserIDSendJSONBody defines parameters for PostDialogUserIDSend.
+type PostDialogUserIDSendJSONBody struct {
 	// Text Текст сообщения
 	Text DialogMessageText `json:"text"`
 }
 
 // PostLoginJSONBody defines parameters for PostLogin.
 type PostLoginJSONBody struct {
-	// Id Идентификатор пользователя
-	Id       *UserId `json:"id,omitempty"`
-	Password *string `json:"password,omitempty"`
+	// ID Идентификатор пользователя
+	ID       UserID `json:"id"`
+	Password string `json:"password" validate:"required,min=8"`
 }
 
 // PostPostCreateJSONBody defines parameters for PostPostCreate.
@@ -110,8 +110,8 @@ type GetPostFeedParams struct {
 
 // PutPostUpdateJSONBody defines parameters for PutPostUpdate.
 type PutPostUpdateJSONBody struct {
-	// Id Идентификатор поста
-	Id PostId `json:"id"`
+	// ID Идентификатор поста
+	ID PostID `json:"id"`
 
 	// Text Текст поста
 	Text PostText `json:"text"`
@@ -122,11 +122,12 @@ type PostUserRegisterJSONBody struct {
 	Biography *string `json:"biography,omitempty"`
 
 	// Birthdate Дата рождения
-	Birthdate  *BirthDate `json:"birthdate,omitempty"`
-	City       *string    `json:"city,omitempty"`
-	FirstName  *string    `json:"first_name,omitempty"`
-	Password   *string    `json:"password,omitempty"`
-	SecondName *string    `json:"second_name,omitempty"`
+	Birthdate  BirthDate `json:"birthdate"`
+	City       *string   `json:"city,omitempty"`
+	FirstName  string    `json:"first_name"`
+	Gender     *string   `json:"gender,omitempty"`
+	Password   string    `json:"password"`
+	SecondName string    `json:"second_name"`
 }
 
 // GetUserSearchParams defines parameters for GetUserSearch.
@@ -138,8 +139,8 @@ type GetUserSearchParams struct {
 	LastName string `form:"last_name" json:"last_name"`
 }
 
-// PostDialogUserIdSendJSONRequestBody defines body for PostDialogUserIdSend for application/json ContentType.
-type PostDialogUserIdSendJSONRequestBody PostDialogUserIdSendJSONBody
+// PostDialogUserIDSendJSONRequestBody defines body for PostDialogUserIDSend for application/json ContentType.
+type PostDialogUserIDSendJSONRequestBody PostDialogUserIDSendJSONBody
 
 // PostLoginJSONRequestBody defines body for PostLogin for application/json ContentType.
 type PostLoginJSONRequestBody PostLoginJSONBody
