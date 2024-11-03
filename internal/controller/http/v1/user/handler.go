@@ -33,7 +33,6 @@ func NewHandler(userSrv UserService, logger *zap.Logger) *Handler {
 
 // (GET /user/get/{id})
 func (h *Handler) GetUserGetId(w http.ResponseWriter, r *http.Request, id generated.UserID) {
-	//w.WriteHeader(http.StatusNotImplemented)
 	_, err := uuid.Parse(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -44,7 +43,6 @@ func (h *Handler) GetUserGetId(w http.ResponseWriter, r *http.Request, id genera
 	requestID := middleware.GetReqID(ctx)
 
 	u, err := h.userService.Get(ctx, id)
-	h.logger.Error("while get", zap.Error(err))
 	if errors.Is(err, models.ErrNotFound) {
 		// TODO: ErrRenderer
 		//func ErrRender(err error) render.Renderer {
@@ -105,5 +103,21 @@ func (h *Handler) PostUserRegister(w http.ResponseWriter, r *http.Request) {
 
 // (GET /user/search)
 func (h *Handler) GetUserSearch(w http.ResponseWriter, r *http.Request, params generated.GetUserSearchParams) {
-	w.WriteHeader(http.StatusNotImplemented)
+	ctx := r.Context()
+	requestID := middleware.GetReqID(ctx)
+
+	users, err := h.userService.ListByPrefixFirstNameSecondName(ctx, params.FirstName, params.LastName)
+	if err != nil {
+		h.logger.Error("while search", zap.Error(err))
+		render.Status(r, http.StatusInternalServerError)
+		render.JSON(w, r, generated.N5Xx{
+			Code:      http.StatusInternalServerError,
+			Message:   http.StatusText(http.StatusInternalServerError),
+			RequestID: &requestID,
+		})
+		return
+	}
+
+	//h.logger.Info("users?", zap.Any("users", users), zap.Any("err", err))
+	render.JSON(w, r, users.ToModel())
 }

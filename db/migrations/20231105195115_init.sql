@@ -12,6 +12,7 @@ create table if not exists public.users
     birthdate     date        not null,
     biography     text,
     city          text,
+    gender        text,
     password_hash text        not null
 );
 

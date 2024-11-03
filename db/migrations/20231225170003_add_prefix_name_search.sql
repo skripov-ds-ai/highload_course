@@ -1,7 +1,10 @@
 -- +goose Up
 -- +goose StatementBegin
 create index if not exists second_first_name_btree_idx
-    on public.users (second_name varchar_pattern_ops, first_name varchar_pattern_ops);
+on public.users
+    (second_name varchar_pattern_ops, first_name varchar_pattern_ops)
+include
+    (id, birthdate, biography, city, gender);
 -- +goose StatementEnd
 
 -- +goose Down

@@ -39,6 +39,7 @@ type UpdateUserParams struct {
 	Birthdate    *time.Time
 	Biography    *string
 	City         *string
+	Gender       *string
 }
 
 type User struct {
@@ -49,6 +50,7 @@ type User struct {
 	Birthdate    time.Time `db:"birthdate"`
 	Biography    *string   `db:"biography"`
 	City         *string   `db:"city"`
+	Gender       *string   `db:"gender"`
 }
 
 // TODO: TO User from generated
@@ -59,6 +61,7 @@ type UserJson struct {
 	Birthdate  time.Time `json:"birthdate"`
 	Biography  *string   `json:"biography"`
 	City       *string   `json:"city"`
+	Gender     *string   `json:"gender"`
 }
 
 func (u *User) ToModel() UserJson {
@@ -69,6 +72,7 @@ func (u *User) ToModel() UserJson {
 		Birthdate:  u.Birthdate,
 		Biography:  u.Biography,
 		City:       u.City,
+		Gender:     u.Gender,
 	}
 }
 
