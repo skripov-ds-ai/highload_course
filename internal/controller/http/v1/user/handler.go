@@ -2,7 +2,6 @@ package user
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/google/uuid"
@@ -86,27 +85,9 @@ func (h *Handler) PostUserRegister(w http.ResponseWriter, r *http.Request) {
 	var body generated.PostUserRegisterJSONBody
 	err := render.DecodeJSON(r.Body, &body)
 	if err != nil {
-		render.Status(r, http.StatusInternalServerError)
-		render.JSON(w, r, generated.N5Xx{
-			Code:      http.StatusInternalServerError,
-			Message:   http.StatusText(http.StatusInternalServerError),
-			RequestID: &requestID,
-		})
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	defer func() {
-		// TODO: defer handling errors to big handler
-		err = r.Body.Close()
-		if err != nil {
-			render.Status(r, http.StatusInternalServerError)
-			render.JSON(w, r, generated.N5Xx{
-				Code:      http.StatusInternalServerError,
-				Message:   http.StatusText(http.StatusInternalServerError),
-				RequestID: &requestID,
-			})
-			return
-		}
-	}()
 
 	userID, err := h.userService.Register(ctx, models.NewCreateUserParams(body))
 	if err != nil {
@@ -119,17 +100,7 @@ func (h *Handler) PostUserRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: defer encoding! + adding headers about type err = json.NewEncoder(w).Encode(u.ToModel())
-	err = json.NewEncoder(w).Encode(models.RegisterUserResponse{UserID: userID})
-	if err != nil {
-		render.Status(r, http.StatusInternalServerError)
-		render.JSON(w, r, generated.N5Xx{
-			Code:      http.StatusInternalServerError,
-			Message:   http.StatusText(http.StatusInternalServerError),
-			RequestID: &requestID,
-		})
-		return
-	}
+	render.JSON(w, r, models.RegisterUserResponse{UserID: userID})
 }
 
 // (GET /user/search)

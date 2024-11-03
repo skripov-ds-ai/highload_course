@@ -35,18 +35,13 @@ func (h *Handler) PostLogin(w http.ResponseWriter, r *http.Request) {
 	var body generated.PostLoginJSONBody
 	err := render.DecodeJSON(r.Body, &body)
 	if err != nil {
-		render.Status(r, http.StatusInternalServerError)
-		render.JSON(w, r, generated.N5Xx{
-			Code:      http.StatusInternalServerError,
-			Message:   http.StatusText(http.StatusInternalServerError),
-			RequestID: &requestID,
-		})
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
 	err = h.validate.Struct(body)
 	if err != nil {
-		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 

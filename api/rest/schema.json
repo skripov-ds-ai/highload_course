@@ -22,7 +22,7 @@
                     "type": "string",
                     "example": "Секретная строка",
                     "x-oapi-codegen-extra-tags": {
-                      "validate": "required,minLength=8"
+                      "validate": "required,min=8"
                     }
                   }
                 }
@@ -649,6 +649,7 @@
             "schema": {
               "type": "object",
               "required": [
+                "code",
                 "message"
               ],
               "properties": {
