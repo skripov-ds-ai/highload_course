@@ -7,9 +7,9 @@ include
     (id, birthdate, biography, city, gender);
 
 create index if not exists first_name_btree_idx
-    on public.users
+on public.users
     (first_name varchar_pattern_ops)
-    include
+include
     (id, birthdate, biography, city, gender)
 ;
 -- +goose StatementEnd
