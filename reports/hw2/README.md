@@ -51,13 +51,23 @@ where tablename = 'users'
 
 - Для ускорения доступа к данным - сохраним дополнительные поля в индекс.
 
-Создаем индекс:
+Дополнительно:
+- Может возникнуть случай, что в `/search` попадет запрос без фамилии. В такой ситуации многоколоночный индекс, начинающийся с фамилии не будет задействован. Поэтому добавим аналогичный индекс только по имени.
+
+Создаем индексы:
 ```postgresql
 create index if not exists second_first_name_btree_idx
 on public.users
     (second_name varchar_pattern_ops, first_name varchar_pattern_ops)
 include
     (id, birthdate, biography, city, gender)
+;
+
+create index if not exists first_name_btree_idx
+    on public.users
+        (first_name varchar_pattern_ops)
+include
+        (id, birthdate, biography, city, gender)
 ;
 ```
 
