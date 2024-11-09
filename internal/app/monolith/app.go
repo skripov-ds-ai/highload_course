@@ -27,9 +27,8 @@ func CreateApp() fx.Option {
 			zap.NewProduction,
 			// config
 			config.NewConfig,
-			config.NewDBConfig,
+			config.NewDBInstanceConfig,
 
-			// TODO: add shutdowner for db!
 			// postgres
 			postgres.NewDB,
 			// repos

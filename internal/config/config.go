@@ -49,13 +49,42 @@ type DBConfig struct {
 	ConnMaxIdleTime time.Duration `yaml:"connMaxIdleTime"`
 }
 
-func NewDBConfig(provider config.Provider) (*DBConfig, error) {
-	var cfg DBConfig
-	if err := provider.Get("monolith").Get("postgres").Populate(&cfg); err != nil {
+type DBInstanceConfig struct {
+	Master *DBConfig   `yaml:"master"`
+	Slaves []*DBConfig `yaml:"slaves"`
+}
+
+func NewDBInstanceConfig(provider config.Provider) (*DBInstanceConfig, error) {
+	var masterCfg DBConfig
+	if err := provider.Get("monolith").Get("postgres").Get("master").Populate(&masterCfg); err != nil {
 		return nil, fmt.Errorf("postgres config: %w", err)
 	}
-	return &cfg, nil
+	var slavesNames []string
+	if err := provider.Get("monolith").Get("postgres").Get("slaves").Populate(&slavesNames); err != nil {
+		return nil, fmt.Errorf("postgres config: %w", err)
+	}
+	var slavesCfgs []*DBConfig
+	for _, slaveName := range slavesNames {
+		var slaveCfg DBConfig
+		if err := provider.Get("monolith").Get("postgres").Get(slaveName).Populate(&slaveCfg); err != nil {
+			return nil, fmt.Errorf("postgres config: %w", err)
+		}
+		slavesCfgs = append(slavesCfgs, &slaveCfg)
+	}
+	return &DBInstanceConfig{
+		Master: &masterCfg,
+		Slaves: slavesCfgs,
+	}, nil
 }
+
+//func NewDBConfig(provider config.Provider) (*DBConfig, error) {
+//	var cfg DBConfig
+//	// TODO: db + replicas
+//	if err := provider.Get("monolith").Get("postgres").Populate(&cfg); err != nil {
+//		return nil, fmt.Errorf("postgres config: %w", err)
+//	}
+//	return &cfg, nil
+//}
 
 func (c *DBConfig) URI() string {
 	return fmt.Sprintf("postgres://%s:%s@%s:%s/%s", c.User, c.Password, c.Host, c.Port, c.DB)

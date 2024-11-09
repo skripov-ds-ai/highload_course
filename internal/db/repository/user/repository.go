@@ -3,8 +3,7 @@ package user
 import (
 	"context"
 	"errors"
-	"github.com/jmoiron/sqlx"
-
+	"github.com/skripov-ds-ai/highload_course/internal/db/postgres"
 	models "github.com/skripov-ds-ai/highload_course/internal/entity"
 )
 
@@ -17,10 +16,10 @@ type Repository interface {
 }
 
 type Storage struct {
-	db *sqlx.DB
+	db *postgres.DB
 }
 
-func NewRepository(db *sqlx.DB) Repository {
+func NewRepository(db *postgres.DB) Repository {
 	return &Storage{
 		db: db,
 	}
@@ -35,7 +34,8 @@ select
 	*
 from public.users
 where id = :id`
-	res, err := s.db.NamedQueryContext(ctx, q, args)
+	db := s.db.ChooseDBForRead()
+	res, err := db.NamedQueryContext(ctx, q, args)
 	if err != nil {
 		return models.User{}, err
 	}
@@ -76,7 +76,8 @@ from public.users u
 where first_name like :first_name and second_name like :second_name
 order by id
 ;`
-	res, err := s.db.NamedQueryContext(ctx, q, args)
+	db := s.db.ChooseDBForRead()
+	res, err := db.NamedQueryContext(ctx, q, args)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +113,7 @@ insert into public.users
 values
 	(:first_name, :second_name, :birthdate, :biography, :city, :password_hash)
 returning id`
-	res, err := s.db.NamedQueryContext(ctx, q, args)
+	res, err := s.db.Master.NamedQueryContext(ctx, q, args)
 	if err != nil {
 		return "", err
 	}

@@ -2,13 +2,37 @@ monolith:
   http:
     port: 8888
   postgres:
-    db: social_net
-    user: postgres
-    password: password
-    host: db
-    port: 5432
+    master:
+      db: social_net
+      user: postgres
+      password: password
+      host: db
+      port: 5432
+      maxOpenConns: 10000
+      maxIdleConns: 10000
+      connMaxLifetime: 1m
+      connMaxIdleTime: 1m
+    slaves:
+      - slave1
+      - slave2
+    slave1:
+      db: social_net
+      user: postgres
+      password: password
+      host: db_slave1
+      port: 5432
+      maxOpenConns: 10000
+      maxIdleConns: 10000
+      connMaxLifetime: 1m
+      connMaxIdleTime: 1m
+    slave2:
+      db: social_net
+      user: postgres
+      password: password
+      host: db_slave2
+      port: 5432
+      maxOpenConns: 10000
+      maxIdleConns: 10000
+      connMaxLifetime: 1m
+      connMaxIdleTime: 1m
 
-    maxOpenConns: 100
-    maxIdleConns: 100
-    connMaxLifetime: 1m
-    connMaxIdleTime: 1m
