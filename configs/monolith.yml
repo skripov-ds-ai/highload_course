@@ -20,7 +20,7 @@ monolith:
       user: postgres
       password: password
       host: db_slave1
-      port: 5433
+      port: 5432
       maxOpenConns: 10000
       maxIdleConns: 10000
       connMaxLifetime: 1m
@@ -30,7 +30,7 @@ monolith:
       user: postgres
       password: password
       host: db_slave2
-      port: 5434
+      port: 5432
       maxOpenConns: 10000
       maxIdleConns: 10000
       connMaxLifetime: 1m

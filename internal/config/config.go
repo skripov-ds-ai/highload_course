@@ -61,7 +61,10 @@ func NewDBInstanceConfig(provider config.Provider) (*DBInstanceConfig, error) {
 	}
 	var slavesNames []string
 	if err := provider.Get("monolith").Get("postgres").Get("slaves").Populate(&slavesNames); err != nil {
-		return nil, fmt.Errorf("postgres config: %w", err)
+		return &DBInstanceConfig{
+			Master: &masterCfg,
+			Slaves: nil,
+		}, nil
 	}
 	var slavesCfgs []*DBConfig
 	for _, slaveName := range slavesNames {
@@ -87,7 +90,7 @@ func NewDBInstanceConfig(provider config.Provider) (*DBInstanceConfig, error) {
 //}
 
 func (c *DBConfig) URI() string {
-	return fmt.Sprintf("postgres://%s:%s@%s:%s/%s", c.User, c.Password, c.Host, c.Port, c.DB)
+	return fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", c.User, c.Password, c.Host, c.Port, c.DB)
 }
 
 //func LoadConfig() (Config, error) {

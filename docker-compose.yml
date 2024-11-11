@@ -1,12 +1,13 @@
 version: '3.8'
 
-#volumes:
-##  influxdbv2:
+volumes:
+  prometheus_volume:
+  grafana_volume:
+#  influxdbv2:
 #  postgres_data:
 #    external: true
 
 services:
-
   app:
     build:
       dockerfile: cmd/monolith/Dockerfile
@@ -23,6 +24,7 @@ services:
 
   db:
     image: postgres:15.4-alpine
+    container_name: db
     restart: on-failure
     volumes:
       - ./volumes/postgres_data/pgmaster:/var/lib/postgresql/data
@@ -43,53 +45,64 @@ services:
 # TODO
   db_slave1:
     image: postgres:15.4-alpine
-    restart: on-failure
+    container_name: db_slave1
+    restart: unless-stopped
     volumes:
-      - ./volumes/postgres_data/pgslave1:/var/lib/postgresql/data
+      - ./volumes/postgres_data/pgslave1/pgslave:/var/lib/postgresql/data
       - ./db/migrations/data:/data
     networks:
       - big_net
-    env_file:
-      - .env
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -h db"]
       interval: 10s
       timeout: 30s
       retries: 5
       start_period: 20s
-    ports:
-      - "5433:${POSTGRES_PORT}"
 
   db_slave2:
     image: postgres:15.4-alpine
-    restart: on-failure
+    container_name: db_slave2
+    restart: unless-stopped
     volumes:
-      - ./volumes/postgres_data/pgslave2:/var/lib/postgresql/data
+      - ./volumes/postgres_data/pgslave2/pgslave:/var/lib/postgresql/data
       - ./db/migrations/data:/data
     networks:
       - big_net
-    env_file:
-      - .env
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -h db"]
       interval: 10s
       timeout: 30s
       retries: 5
       start_period: 20s
+
+  pg-exporter-master:
+    image: prometheuscommunity/postgres-exporter:v0.12.0
+    container_name: pg-exporter-db-master
+#    env_file:
+#      - .env
+    environment:
+      - DATA_SOURCE_NAME=postgres://postgres:password@db:5432/social_net?sslmode=disable
+      - DATA_SOURCE_USER=postgres
+      - DATA_SOURCE_PASS=password
     ports:
-      - "5434:${POSTGRES_PORT}"
+      - 9187:9187
+    depends_on:
+      - db
+    networks:
+      - big_net
 
   prometheus:
     image: prom/prometheus:latest
     container_name: monitoring_prometheus
     restart: unless-stopped
     volumes:
-      - ./data/prometheus/config:/etc/prometheus/
-      - ./data/prometheus/data:/prometheus
+      - ./build/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_volume:/prometheus
     command:
-      - '-config.file=/etc/prometheus/prometheus.yml'
-      - '-storage.local.path=/prometheus'
-      - '-alertmanager.url=http://alertmanager:9093'
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=10d
+      - --web.enable-lifecycle
     expose:
       - 9090
     ports:
@@ -97,6 +110,12 @@ services:
     links:
       - cadvisor:cadvisor
       - node-exporter:node-exporter
+    depends_on:
+      - cadvisor
+      - node-exporter
+      - pg-exporter-master
+    networks:
+      - big_net
 
   node-exporter:
     image: prom/node-exporter:latest
@@ -104,9 +123,11 @@ services:
     restart: unless-stopped
     expose:
       - 9100
+    networks:
+      - big_net
 
   cadvisor:
-    image: google/cadvisor:latest
+    image: gcr.io/cadvisor/cadvisor
     container_name: monitoring_cadvisor
     restart: unless-stopped
     volumes:
@@ -116,6 +137,12 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     expose:
       - 8080
+    command:
+      - --docker_only=true
+    depends_on:
+      - db
+    networks:
+      - big_net
 
   grafana:
     image: grafana/grafana:latest
@@ -124,16 +151,22 @@ services:
     links:
       - prometheus:prometheus
     volumes:
-      - ./data/grafana:/var/lib/grafana
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=MYPASSWORT
-      - GF_USERS_ALLOW_SIGN_UP=false
-      - GF_SERVER_DOMAIN=myrul.com
-      - GF_SMTP_ENABLED=true
-      - GF_SMTP_HOST=smtp.gmail.com:587
-      - GF_SMTP_USER=myadrress@gmail.com
-      - GF_SMTP_PASSWORD=mypassword
-      - GF_SMTP_FROM_ADDRESS=myaddress@gmail.com
+      - grafana_volume:/var/lib/grafana
+    ports:
+      - '3000:3000'
+    depends_on:
+      - prometheus
+    networks:
+      - big_net
+#    environment:
+#      - GF_SECURITY_ADMIN_PASSWORD=MYPASSWORT
+#      - GF_USERS_ALLOW_SIGN_UP=false
+#      - GF_SERVER_DOMAIN=myrul.com
+#      - GF_SMTP_ENABLED=true
+#      - GF_SMTP_HOST=smtp.gmail.com:587
+#      - GF_SMTP_USER=myadrress@gmail.com
+#      - GF_SMTP_PASSWORD=mypassword
+#      - GF_SMTP_FROM_ADDRESS=myaddress@gmail.com
 
 #  grafana:
 #    image: grafana/grafana-enterprise
